@@ -2,11 +2,12 @@ services:
   - type: web
     name: amazon-scraper
     env: node
+    runtime: node
+    nodeVersion: 20
     plan: free
     buildCommand: |
       npm install
-      npx playwright install
-    startCommand: node index.js
+    startCommand: npx playwright install --with-deps && node index.js
     autoDeploy: true
     envVars:
       - key: PLAYWRIGHT_BROWSERS_PATH
