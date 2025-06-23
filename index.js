@@ -15,10 +15,17 @@ app.get('/scrape', async (req, res) => {
   if (!asin) return res.status(400).json({ error: 'Missing ASIN parameter' });
 
   try {
-    const browser = await puppeteer.launch({
-      headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
-    });
+const browser = await puppeteer.launch({
+  executablePath: '/usr/bin/google-chrome',
+  headless: true,
+  args: [
+    '--no-sandbox',
+    '--disable-setuid-sandbox',
+    '--disable-dev-shm-usage',
+    '--disable-gpu',
+    '--window-size=1920x1080'
+  ]
+});
     const page = await browser.newPage();
 
     await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64)...');
